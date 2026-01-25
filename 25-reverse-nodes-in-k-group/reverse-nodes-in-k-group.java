@@ -9,33 +9,29 @@
  * }
  */
 class Solution {
+    // Lookup to see if there are atleast k
     public ListNode reverseKGroup(ListNode head, int k) {
-        if (head == null || k ==1) return head;
-
-        ListNode dummy = new ListNode(0);
-        dummy.next = head;
-        ListNode curr = dummy,nex = dummy,pre = dummy;
-        
-        int count = 0;
-        while(curr.next!=null){
-            curr = curr.next;
-            count ++ ; 
+        ListNode node = head ; 
+        for (int i = 0; i < k ; i ++){
+            if (node == null) return head;
+            node = node.next;
         }
-        while(count >= k){
-            curr = pre.next;
-            nex = curr.next;
+        //Reverse the current group of k
+        ListNode newHead = reverse(head,node);
+        // Call next group recursively
+        head.next = reverseKGroup(node , k);
+        return newHead;
 
-            // k-1
-            for(int i = 1; i<k ; i++){
-                curr.next = nex.next;
-                nex.next = pre.next;
-                pre.next = nex;
-                nex = curr.next;
-            }
-            // move pre to end
-            pre = curr;
-            count -=k ; //dec remaining count
+}
+    private ListNode reverse(ListNode head , ListNode stop){
+        ListNode prev = null ; 
+        ListNode curr = head ; 
+        while (curr != stop){
+            ListNode next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
         }
-        return dummy.next;
+        return prev ; 
     }
 }
