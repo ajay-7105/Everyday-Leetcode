@@ -1,31 +1,25 @@
 class Solution {
     public int longestCycle(int[] edges) {
         int n = edges.length ;
-        int [] timeVisited = new int [n];
-        boolean[] visited = new boolean [n];
-        int maxCycle = -1;
+        int[] timeVisited = new int[n];
+        int maxCycle = -1 ;
+        int currentStep = 1;
 
-        for (int i = 0 ; i < n ;i++){
-            if (visited[i]) continue;
+        for (int i = 0;i < n;i++){
+            if (timeVisited[i] > 0) continue;
+
+            int startTime = currentStep;
             int curr = i ; 
-            int startTime = 1;
-            int startNode = i;
-            int step = 1 ; 
-            int startStep = step ; 
-            Map <Integer , Integer > path = new HashMap<>();
 
-            while(curr != -1 ){
-                if (path.containsKey(curr)){
-                    maxCycle = Math.max(maxCycle , step - path.get(curr));
-                    break;
-                }
-                if (visited[curr]) break;
-                visited[curr] = true;
-                path.put(curr,step);
-                curr = edges[curr];
-                step++;
+            while(curr != -1 && timeVisited[curr] == 0){
+                timeVisited[curr] = currentStep++;
+                curr  = edges[curr];
+            }
+            if(curr != -1 && timeVisited[curr] >= startTime){
+                maxCycle = Math.max(maxCycle , currentStep - timeVisited[curr]);
             }
         }
         return maxCycle;
+    
     }
 }
