@@ -4,7 +4,7 @@ class Solution {
         if (n <= 1) return intervals;
 
         //Sort by start
-        Arrays.sort(intervals ,Comparator.comparingInt(a->a[0]));
+        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
 
         int[][] result = new int[n][2];
         int idx=0;
