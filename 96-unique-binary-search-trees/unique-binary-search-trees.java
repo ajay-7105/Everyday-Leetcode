@@ -7,7 +7,8 @@ class Solution {
 
         for(int totalNodes = 2;totalNodes <=n ; totalNodes++){
             for (int root = 1; root <= totalNodes; root++){
-
+                //Number of nodes on the left root -1
+                //Number of nodes on the right , totalNodes - right
                 int left = root - 1;
                 int right = totalNodes - root;
 
